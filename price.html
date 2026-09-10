@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>洗澡美容價格試算器</title>
+<style>
+  :root{
+    --bg:#fdf8f4; --card:#ffffff; --line:#ecdfd4; --ink:#33291f; --muted:#8a7b6d;
+    --accent:#d9793f; --accent-soft:#fbeade; --ok:#4a7c59;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#1c1815; --card:#26211d; --line:#3a322b; --ink:#f0e8e0; --muted:#a29486;
+      --accent:#e08a52; --accent-soft:#3a2a1e; --ok:#7fb08e;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;padding:24px 16px 60px;background:var(--bg);color:var(--ink);
+       font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+       line-height:1.7}
+  .wrap{max-width:640px;margin:0 auto}
+  .back{display:inline-block;color:var(--muted);text-decoration:none;font-size:.88rem;margin-bottom:16px}
+  .back:hover{color:var(--accent)}
+  header{text-align:center;margin-bottom:28px}
+  h1{margin:0 0 6px;font-size:1.7rem;letter-spacing:1px}
+  .sub{color:var(--muted);font-size:.9rem}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;
+        padding:22px;margin-bottom:18px}
+  .field{margin-bottom:18px}
+  .field:last-child{margin-bottom:0}
+  label{display:block;font-weight:700;margin-bottom:8px;font-size:.95rem}
+  select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;
+         background:var(--bg);color:var(--ink);font:inherit}
+  .checks{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+  .check{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid var(--line);
+         border-radius:10px;background:var(--bg);cursor:pointer;font-size:.9rem}
+  .check:hover{border-color:var(--accent)}
+  .check input{accent-color:var(--accent);width:17px;height:17px}
+  .check .p{margin-left:auto;color:var(--muted);font-size:.85rem}
+
+  button{width:100%;padding:15px;border:0;border-radius:12px;background:var(--accent);
+         color:#fff;font:inherit;font-size:1.05rem;font-weight:700;cursor:pointer;letter-spacing:1px}
+  button:hover{filter:brightness(1.05)}
+
+  #result{display:none}
+  #result.on{display:block}
+  .row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--line);font-size:.95rem}
+  .row:last-of-type{border-bottom:0}
+  .row .n{color:var(--muted)}
+  .total{display:flex;justify-content:space-between;align-items:baseline;
+         margin-top:14px;padding-top:14px;border-top:2px solid var(--accent)}
+  .total .lab{font-weight:700}
+  .total .num{font-size:2.1rem;font-weight:800;color:var(--accent)}
+  .time{margin-top:10px;padding:10px 12px;background:var(--accent-soft);border-radius:10px;
+        font-size:.9rem;color:var(--ink)}
+  footer{text-align:center;color:var(--muted);font-size:.8rem;margin-top:26px;line-height:1.8}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back" href="index.html">← 回工具箱首頁</a>
+
+  <header>
+    <h1>🐩 洗澡美容價格試算器</h1>
+    <div class="sub">選一選，馬上算出價格與預估時間</div>
+  </header>
+
+  <div class="card">
+
+    <div class="field">
+      <label for="size">狗狗體型</label>
+      <select id="size">
+        <option value="small">小型犬（10 公斤以下）</option>
+        <option value="medium">中型犬（10–25 公斤）</option>
+        <option value="large">大型犬（25 公斤以上）</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="coat">毛的長度</label>
+      <select id="coat">
+        <option value="short">短毛</option>
+        <option value="medium">中長毛</option>
+        <option value="long">長毛</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="service">服務項目</label>
+      <select id="service">
+        <option value="bath">單純洗澡</option>
+        <option value="trim">洗澡 + 修剪</option>
+        <option value="full">全套造型</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="knot">毛髮打結程度</label>
+      <select id="knot">
+        <option value="none">沒有打結</option>
+        <option value="light">輕微打結</option>
+        <option value="heavy">嚴重打結</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>加購項目</label>
+      <div class="checks">
+        <label class="check"><input type="checkbox" data-price="100" data-min="10">剪指甲<span class="p">+100</span></label>
+        <label class="check"><input type="checkbox" data-price="100" data-min="10">清耳朵<span class="p">+100</span></label>
+        <label class="check"><input type="checkbox" data-price="200" data-min="20">除蚤浴<span class="p">+200</span></label>
+        <label class="check"><input type="checkbox" data-price="300" data-min="30">藥浴<span class="p">+300</span></label>
+        <label class="check"><input type="checkbox" data-price="150" data-min="15">肛門腺<span class="p">+150</span></label>
+      </div>
+    </div>
+
+  </div>
+
+  <button id="calc">計算價格</button>
+
+  <div class="card" id="result">
+    <div id="detail"></div>
+    <div class="total">
+      <span class="lab">預估總價</span>
+      <span class="num" id="total">NT$ 0</span>
+    </div>
+    <div class="time" id="time"></div>
+  </div>
+
+  <footer>
+    本頁為教學示範用途，價格為虛構範例，非實際報價。<br>
+    AI 資訊素養與應用（通識3）｜課程示範作品
+  </footer>
+
+</div>
+
+<script>
+/* ─────────────────────────────────────────────
+   價目設定：改這裡就能調整整份價格
+   ───────────────────────────────────────────── */
+
+// 基本價：依「服務項目」與「體型」決定
+const 基本價 = {
+  bath: { small: 400, medium: 600, large: 900 },   // 單純洗澡
+  trim: { small: 700, medium: 1000, large: 1400 }, // 洗澡 + 修剪
+  full: { small: 1000, medium: 1400, large: 1900 } // 全套造型
+};
+
+// 毛長加價
+const 毛長加價 = { short: 0, medium: 100, long: 250 };
+
+// 打結加價
+const 打結加價 = { none: 0, light: 200, heavy: 500 };
+
+// 基本作業時間（分鐘）
+const 基本時間 = {
+  bath: { small: 40, medium: 60, large: 90 },
+  trim: { small: 70, medium: 100, large: 140 },
+  full: { small: 100, medium: 140, large: 180 }
+};
+
+const 中文 = {
+  small:"小型犬", medium:"中型犬", large:"大型犬",
+  short:"短毛", long:"長毛",
+  bath:"單純洗澡", trim:"洗澡 + 修剪", full:"全套造型",
+  none:"沒有打結", light:"輕微打結", heavy:"嚴重打結"
+};
+
+/* ─────────────────────────────────────────────
+   計算
+   ───────────────────────────────────────────── */
+document.getElementById("calc").addEventListener("click", function(){
+
+  const size    = document.getElementById("size").value;
+  const coat    = document.getElementById("coat").value;
+  const service = document.getElementById("service").value;
+  const knot    = document.getElementById("knot").value;
+
+  const 明細 = [];
+  let 總價 = 0;
+  let 總時間 = 0;
+
+  // 1. 基本價
+  const base = 基本價[service][size];
+  總價 += base;
+  總時間 += 基本時間[service][size];
+  明細.push([中文[service] + "（" + 中文[size] + "）", base]);
+
+  // 2. 毛長加價（短毛不加）
+  if (毛長加價[coat] > 0){
+    總價 += 毛長加價[coat];
+    總時間 += 15;
+    明細.push([(coat === "medium" ? "中長毛" : 中文[coat]) + "加價", 毛長加價[coat]]);
+  }
+
+  // 3. 打結加價（嚴重打結另外多花時間）
+  if (打結加價[knot] > 0){
+    總價 += 打結加價[knot];
+    總時間 += (knot === "heavy" ? 40 : 15);
+    明細.push([中文[knot] + "處理", 打結加價[knot]]);
+  }
+
+  // 4. 加購項目
+  document.querySelectorAll('.check input:checked').forEach(function(box){
+    const 價格 = Number(box.dataset.price);
+    const 時間 = Number(box.dataset.min);
+    總價 += 價格;
+    總時間 += 時間;
+    明細.push([box.parentElement.textContent.replace(/\+\d+/, "").trim(), 價格]);
+  });
+
+  // 5. 大型犬 + 全套造型：折扣（示範「多個條件同時成立」）
+  if (size === "large" && service === "full"){
+    const 折 = -200;
+    總價 += 折;
+    明細.push(["大型犬全套優惠", 折]);
+  }
+
+  // 顯示明細
+  document.getElementById("detail").innerHTML = 明細.map(function(item){
+    return '<div class="row"><span class="n">' + item[0] + '</span><span>NT$ ' +
+           item[1].toLocaleString() + '</span></div>';
+  }).join("");
+
+  document.getElementById("total").textContent = "NT$ " + 總價.toLocaleString();
+
+  const 小時 = Math.floor(總時間 / 60);
+  const 分鐘 = 總時間 % 60;
+  document.getElementById("time").textContent =
+    "⏱ 預估作業時間約 " + (小時 > 0 ? 小時 + " 小時 " : "") + 分鐘 + " 分鐘";
+
+  document.getElementById("result").classList.add("on");
+  document.getElementById("result").scrollIntoView({ behavior:"smooth", block:"nearest" });
+});
+</script>
+</body>
+</html>

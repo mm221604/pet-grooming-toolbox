@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>犬貓危險食物查詢</title>
+<style>
+  :root{
+    --bg:#fdf8f4; --card:#ffffff; --line:#ecdfd4; --ink:#33291f; --muted:#8a7b6d;
+    --accent:#d9793f; --accent-soft:#fbeade;
+    --hi:#c0392b; --hi-bg:#fdecea; --mid:#c07a1e; --mid-bg:#fdf4e3; --lo:#4a7c59; --lo-bg:#eaf3ed;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#1c1815; --card:#26211d; --line:#3a322b; --ink:#f0e8e0; --muted:#a29486;
+      --accent:#e08a52; --accent-soft:#3a2a1e;
+      --hi:#f08578; --hi-bg:#3a221f; --mid:#e0aa5c; --mid-bg:#33291a; --lo:#7fb08e; --lo-bg:#233029;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;padding:20px 16px 60px;background:var(--bg);color:var(--ink);line-height:1.7;
+       font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif}
+  .wrap{max-width:640px;margin:0 auto}
+  .back{display:inline-block;color:var(--muted);text-decoration:none;font-size:.88rem;margin-bottom:16px}
+  .back:hover{color:var(--accent)}
+  header{text-align:center;margin-bottom:20px}
+  h1{margin:0 0 6px;font-size:1.6rem;letter-spacing:1px}
+  .sub{color:var(--muted);font-size:.9rem}
+
+  .alert{background:var(--hi-bg);border-left:4px solid var(--hi);border-radius:0 10px 10px 0;
+         padding:12px 15px;margin-bottom:18px;font-size:.9rem}
+  .alert b{color:var(--hi)}
+
+  .bar{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:16px}
+  input[type="search"],select{padding:11px 12px;border:1px solid var(--line);border-radius:10px;
+       background:var(--card);color:var(--ink);font:inherit}
+  input[type="search"]{flex:1;min-width:180px}
+
+  .count{color:var(--muted);font-size:.85rem;margin-bottom:10px}
+
+  .item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;
+        margin-bottom:11px}
+  .item .top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+  .item h3{margin:0;font-size:1.1rem}
+  .lv{padding:2px 11px;border-radius:20px;font-size:.76rem;font-weight:800;letter-spacing:.5px}
+  .lv.high{background:var(--hi-bg);color:var(--hi)}
+  .lv.mid{background:var(--mid-bg);color:var(--mid)}
+  .lv.low{background:var(--lo-bg);color:var(--lo)}
+  .who{margin-left:auto;font-size:.82rem;color:var(--muted);white-space:nowrap}
+  .item p{margin:4px 0;font-size:.92rem}
+  .item .sym{color:var(--muted);font-size:.87rem}
+
+  .none{text-align:center;color:var(--muted);padding:36px 0}
+  footer{text-align:center;color:var(--muted);font-size:.8rem;margin-top:26px;line-height:1.8}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back" href="index.html">← 回工具箱首頁</a>
+
+  <header>
+    <h1>🚫 犬貓危險食物查詢</h1>
+    <div class="sub">飼主問「這個能不能給牠吃」的時候，一秒查到答案</div>
+  </header>
+
+  <div class="alert">
+    <b>⚠️ 重要：</b>本頁為<strong>教學示範用途</strong>，僅供一般參考，<strong>不能取代獸醫診斷</strong>。
+    若寵物已經誤食，請<strong>立即聯絡獸醫院</strong>，不要等症狀出現。
+  </div>
+
+  <div class="bar">
+    <input type="search" id="q" placeholder="輸入食物名稱，例如：巧克力、洋蔥…">
+    <select id="who">
+      <option value="all">狗和貓都看</option>
+      <option value="dog">只看狗</option>
+      <option value="cat">只看貓</option>
+    </select>
+    <select id="lv">
+      <option value="all">所有危險程度</option>
+      <option value="high">只看高危險</option>
+    </select>
+  </div>
+
+  <div class="count" id="count"></div>
+  <div id="list"></div>
+
+  <footer>
+    本頁為教學示範用途，資料為一般常見資訊整理，實際情形請諮詢獸醫師。<br>
+    AI 資訊素養與應用（通識3）｜課程示範作品
+  </footer>
+
+</div>
+
+<script>
+/* ── 資料：改這裡就能增減項目 ── */
+const 食物 = [
+  { 名:"巧克力", 對象:"both", 等級:"high", 原因:"含可可鹼，犬貓無法有效代謝，黑巧克力濃度最高。", 症狀:"嘔吐、心跳過快、抽搐" },
+  { 名:"木糖醇（代糖）", 對象:"dog", 等級:"high", 原因:"常見於無糖口香糖、部分花生醬，極少量即可引發嚴重低血糖。", 症狀:"虛弱、癲癇、肝衰竭" },
+  { 名:"葡萄、葡萄乾", 對象:"dog", 等級:"high", 原因:"確切成分不明，個體差異大，少量也可能造成腎損傷。", 症狀:"嘔吐、食慾不振、尿量減少" },
+  { 名:"洋蔥、蔥、蒜、韭菜", 對象:"both", 等級:"high", 原因:"破壞紅血球，貓比狗更敏感；加熱或粉末狀一樣有毒。", 症狀:"貧血、無力、尿色變深" },
+  { 名:"酒精", 對象:"both", 等級:"high", 原因:"包含含酒精的食物與未烤的麵團，代謝能力遠低於人類。", 症狀:"步態不穩、呼吸抑制" },
+  { 名:"生麵團（含酵母）", 對象:"both", 等級:"high", 原因:"在胃中持續發酵膨脹並產生酒精。", 症狀:"腹脹、腹痛、酒精中毒" },
+  { 名:"咖啡、茶、能量飲料", 對象:"both", 等級:"high", 原因:"咖啡因刺激心臟與神經系統。", 症狀:"躁動、心律不整、抽搐" },
+  { 名:"百合（花與葉）", 對象:"cat", 等級:"high", 原因:"對貓有強烈腎毒性，花粉沾到毛再舔入也可能中毒。", 症狀:"嘔吐、嗜睡、急性腎衰竭" },
+  { 名:"夏威夷豆", 對象:"dog", 等級:"mid", 原因:"機轉不明，通常 12–24 小時內出現症狀。", 症狀:"後肢無力、發抖、發燒" },
+  { 名:"酪梨", 對象:"both", 等級:"mid", 原因:"果肉風險較低，但果核有阻塞風險，外皮與葉含 persin。", 症狀:"嘔吐、腹瀉" },
+  { 名:"煮熟的骨頭", 對象:"both", 等級:"mid", 原因:"加熱後變脆，容易碎裂成尖銳碎片。", 症狀:"口腔割傷、腸道穿孔、便秘" },
+  { 名:"過量鹽分（人類零食）", 對象:"both", 等級:"mid", 原因:"洋芋片、鹽酥雞等，鈉含量遠超過犬貓需求。", 症狀:"大量喝水、嘔吐、抽搐" },
+  { 名:"桃、李、櫻桃的果核", 對象:"both", 等級:"mid", 原因:"果核含氰化物前驅物，且體積易造成阻塞。", 症狀:"呼吸急促、瞳孔放大" },
+  { 名:"牛奶、乳製品", 對象:"both", 等級:"low", 原因:"多數成犬貓有乳糖不耐，不是中毒但會不舒服。", 症狀:"腹瀉、脹氣" },
+  { 名:"生蛋白", 對象:"both", 等級:"low", 原因:"長期大量食用可能影響生物素吸收，另有生菌風險。", 症狀:"皮膚與毛髮狀況變差" }
+];
+
+const 等級名 = { high:"高危險", mid:"中等風險", low:"低風險" };
+const 對象名 = { both:"狗・貓", dog:"狗", cat:"貓" };
+
+function esc(t){
+  return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+function render(){
+  const q = document.getElementById("q").value.trim().toLowerCase();
+  const who = document.getElementById("who").value;
+  const lv = document.getElementById("lv").value;
+
+  const 結果 = 食物.filter(function(f){
+    // 條件一：對象
+    if (who === "dog" && f.對象 === "cat") return false;
+    if (who === "cat" && f.對象 === "dog") return false;
+    // 條件二：危險程度
+    if (lv === "high" && f.等級 !== "high") return false;
+    // 條件三：關鍵字
+    if (q && !(f.名 + f.原因 + f.症狀).toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  document.getElementById("count").textContent = "找到 " + 結果.length + " 筆";
+
+  document.getElementById("list").innerHTML = 結果.length
+    ? 結果.map(function(f){
+        return '<div class="item">' +
+          '<div class="top"><h3>' + esc(f.名) + '</h3>' +
+          '<span class="lv ' + f.等級 + '">' + 等級名[f.等級] + '</span>' +
+          '<span class="who">' + 對象名[f.對象] + '</span></div>' +
+          '<p>' + esc(f.原因) + '</p>' +
+          '<p class="sym">可能症狀：' + esc(f.症狀) + '</p></div>';
+      }).join("")
+    : '<div class="none">查不到這個項目。<br>查不到不代表安全——不確定的東西一律不要餵。</div>';
+}
+
+document.getElementById("q").addEventListener("input", render);
+document.getElementById("who").addEventListener("change", render);
+document.getElementById("lv").addEventListener("change", render);
+render();
+</script>
+</body>
+</html>

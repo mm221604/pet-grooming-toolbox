@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>寵物年齡換算器</title>
+<style>
+  :root{
+    --bg:#fdf8f4; --card:#ffffff; --line:#ecdfd4; --ink:#33291f; --muted:#8a7b6d;
+    --accent:#d9793f; --accent-soft:#fbeade;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#1c1815; --card:#26211d; --line:#3a322b; --ink:#f0e8e0; --muted:#a29486;
+      --accent:#e08a52; --accent-soft:#3a2a1e;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;padding:20px 16px 60px;background:var(--bg);color:var(--ink);line-height:1.7;
+       font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif}
+  .wrap{max-width:560px;margin:0 auto}
+  .back{display:inline-block;color:var(--muted);text-decoration:none;font-size:.88rem;margin-bottom:16px}
+  .back:hover{color:var(--accent)}
+  header{text-align:center;margin-bottom:24px}
+  h1{margin:0 0 6px;font-size:1.6rem;letter-spacing:1px}
+  .sub{color:var(--muted);font-size:.9rem}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
+  .field{margin-bottom:18px}
+  .field:last-child{margin-bottom:0}
+  label{display:block;font-weight:700;margin-bottom:8px;font-size:.95rem}
+  select,input[type="number"]{width:100%;padding:11px 12px;border:1px solid var(--line);
+        border-radius:10px;background:var(--bg);color:var(--ink);font:inherit}
+  #sizeField.hide{display:none}
+  button{width:100%;padding:15px;border:0;border-radius:12px;background:var(--accent);color:#fff;
+         font:inherit;font-size:1.05rem;font-weight:700;cursor:pointer;letter-spacing:1px}
+  button:hover{filter:brightness(1.05)}
+
+  #result{display:none;text-align:center}
+  #result.on{display:block}
+  .big{font-size:3rem;font-weight:800;color:var(--accent);line-height:1.2;margin:6px 0}
+  .big small{font-size:1.1rem;font-weight:600;color:var(--ink)}
+  .stage{margin-top:14px;padding:12px 14px;background:var(--accent-soft);border-radius:10px;
+         font-size:.94rem;text-align:left}
+  footer{text-align:center;color:var(--muted);font-size:.8rem;margin-top:24px;line-height:1.8}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back" href="index.html">← 回工具箱首頁</a>
+
+  <header>
+    <h1>🎂 寵物年齡換算器</h1>
+    <div class="sub">換算成人類年齡，跟飼主解釋更有畫面</div>
+  </header>
+
+  <div class="card">
+    <div class="field">
+      <label for="type">寵物種類</label>
+      <select id="type">
+        <option value="dog">狗</option>
+        <option value="cat">貓</option>
+      </select>
+    </div>
+
+    <div class="field" id="sizeField">
+      <label for="size">體型（狗才需要選）</label>
+      <select id="size">
+        <option value="small">小型犬（10 公斤以下）</option>
+        <option value="medium">中型犬（10–25 公斤）</option>
+        <option value="large">大型犬（25 公斤以上）</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="age">實際年齡（歲）</label>
+      <input type="number" id="age" min="0" max="30" step="0.5" value="3">
+    </div>
+  </div>
+
+  <button id="calc">換算成人類年齡</button>
+
+  <div class="card" id="result">
+    <div>換算後大約是</div>
+    <div class="big" id="human">0 <small>歲</small></div>
+    <div class="stage" id="stage"></div>
+  </div>
+
+  <footer>
+    本頁為教學示範用途，換算方式為通用估算，實際情況因品種與健康狀況而異。<br>
+    AI 資訊素養與應用（通識3）｜課程示範作品
+  </footer>
+
+</div>
+
+<script>
+/* ── 換算規則 ──────────────────────────────
+   第 1 歲 = 人類 15 歲
+   第 2 歲 = 再加 9 歲（滿 2 歲約等於人類 24 歲）
+   第 3 歲以後 = 每年再加幾歲，依種類與體型不同
+   ───────────────────────────────────────── */
+const 每年加 = {
+  cat:  { any: 4 },
+  dog:  { small: 4, medium: 5, large: 6 }
+};
+
+const type = document.getElementById("type");
+const sizeField = document.getElementById("sizeField");
+
+// 選「貓」的時候把體型欄位藏起來（條件判斷的示範）
+type.addEventListener("change", function(){
+  sizeField.classList.toggle("hide", type.value === "cat");
+});
+
+document.getElementById("calc").addEventListener("click", function(){
+  const 種類 = type.value;
+  const 體型 = document.getElementById("size").value;
+  const 年齡 = Number(document.getElementById("age").value);
+
+  if (!(年齡 >= 0)){
+    alert("請輸入正確的年齡");
+    return;
+  }
+
+  let 人類年齡;
+  if (年齡 <= 1){
+    人類年齡 = 年齡 * 15;
+  } else if (年齡 <= 2){
+    人類年齡 = 15 + (年齡 - 1) * 9;
+  } else {
+    const 加 = (種類 === "cat") ? 每年加.cat.any : 每年加.dog[體型];
+    人類年齡 = 24 + (年齡 - 2) * 加;
+  }
+  人類年齡 = Math.round(人類年齡);
+
+  document.getElementById("human").innerHTML = 人類年齡 + ' <small>歲</small>';
+
+  // 依換算結果給不同的照顧建議（多重條件判斷的示範）
+  let 說明;
+  if (人類年齡 < 20){
+    說明 = "🍼 <b>幼年期</b>　活動量大、好奇心強。美容時要多花時間讓牠習慣吹風機和剪刀的聲音。";
+  } else if (人類年齡 < 45){
+    說明 = "💪 <b>成年期</b>　狀況最穩定的階段，可以維持固定的美容週期。";
+  } else if (人類年齡 < 65){
+    說明 = "🌤 <b>熟齡期</b>　開始要注意皮膚狀況與關節。美容時間建議縮短，中間讓牠休息。";
+  } else {
+    說明 = "🌙 <b>高齡期</b>　體力下降，長時間站立會不舒服。建議分段進行，並先與飼主確認健康狀況。";
+  }
+  document.getElementById("stage").innerHTML = 說明;
+
+  document.getElementById("result").classList.add("on");
+});
+</script>
+</body>
+</html>

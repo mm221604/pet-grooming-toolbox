@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>我的寵物美容工具箱</title>
+<style>
+  :root{
+    --bg:#fdf8f4; --card:#ffffff; --line:#ecdfd4; --ink:#33291f; --muted:#8a7b6d;
+    --accent:#d9793f; --accent-soft:#fbeade;
+    --shadow:0 1px 2px rgba(90,60,40,.05), 0 8px 24px rgba(90,60,40,.07);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#1c1815; --card:#26211d; --line:#3a322b; --ink:#f0e8e0; --muted:#a29486;
+      --accent:#e08a52; --accent-soft:#3a2a1e;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.3);
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;padding:0 0 60px;background:var(--bg);color:var(--ink);line-height:1.7;
+       font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif}
+  .wrap{max-width:760px;margin:0 auto;padding:0 18px}
+
+  header{background:linear-gradient(140deg,var(--accent) 0%,#c4642f 100%);color:#fff;
+         padding:52px 18px 46px;text-align:center;margin-bottom:34px}
+  header .in{max-width:760px;margin:0 auto}
+  header .paw{font-size:2.6rem;line-height:1;margin-bottom:10px}
+  header h1{margin:0 0 8px;font-size:2rem;letter-spacing:2px;font-weight:800}
+  header p{margin:0;opacity:.93;font-size:.98rem}
+
+  h2{font-size:1.15rem;margin:34px 0 14px;letter-spacing:1px;display:flex;align-items:center;gap:10px}
+  h2::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  .tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+  .tool{display:block;text-decoration:none;color:inherit;background:var(--card);
+        border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow);
+        transition:transform .14s ease, border-color .14s ease}
+  .tool:hover{transform:translateY(-3px);border-color:var(--accent)}
+  .tool .ico{font-size:2rem;line-height:1;margin-bottom:10px}
+  .tool h3{margin:0 0 6px;font-size:1.12rem}
+  .tool p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.6}
+  .tool .go{margin-top:12px;color:var(--accent);font-weight:700;font-size:.88rem}
+
+  .about{background:var(--card);border:1px solid var(--line);border-radius:16px;
+         padding:24px;box-shadow:var(--shadow)}
+  .about p{margin:8px 0}
+  .about .who{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+  .about .av{width:52px;height:52px;border-radius:50%;background:var(--accent-soft);
+             display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex:0 0 52px}
+  .about .who b{font-size:1.1rem;display:block}
+  .about .who span{color:var(--muted);font-size:.88rem}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .tag{background:var(--accent-soft);color:var(--accent);padding:3px 12px;border-radius:20px;
+       font-size:.82rem;font-weight:600}
+
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:36px;line-height:1.8}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="in">
+    <div class="paw">🐾</div>
+    <h1>我的寵物美容工具箱</h1>
+    <p>把每天要算、要查、要跟飼主解釋的事，變成點一下就好</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <h2>工具</h2>
+  <div class="tools">
+
+    <a class="tool" href="price.html">
+      <div class="ico">💰</div>
+      <h3>洗澡美容價格試算器</h3>
+      <p>選體型、毛長、服務項目和加購，馬上算出價格與預估作業時間。</p>
+      <div class="go">開始試算 →</div>
+    </a>
+
+    <a class="tool" href="age.html">
+      <div class="ico">🎂</div>
+      <h3>寵物年齡換算器</h3>
+      <p>把狗狗、貓咪的實際年齡換算成人類年齡，跟飼主解釋更有畫面。</p>
+      <div class="go">開始換算 →</div>
+    </a>
+
+    <a class="tool" href="food.html">
+      <div class="ico">🚫</div>
+      <h3>危險食物查詢</h3>
+      <p>飼主問「這個能不能給牠吃」的時候，一秒查到答案。</p>
+      <div class="go">開始查詢 →</div>
+    </a>
+
+  </div>
+
+  <h2>關於我</h2>
+  <div class="about">
+    <div class="who">
+      <div class="av">🐩</div>
+      <div>
+        <b>（這裡放你的名字）</b>
+        <span>寵物美容系　｜　AI 資訊素養與應用</span>
+      </div>
+    </div>
+    <p>這裡是我這學期做的工具。每一個都是我在課堂上用 AI 一步一步做出來的，也都是我覺得在寵物美容工作上真的會用到的東西。</p>
+    <p>如果你是飼主，歡迎直接使用；如果你是同行，這些工具你也可以拿去用。</p>
+    <div class="tags">
+      <span class="tag">寵物美容</span>
+      <span class="tag">AI 工具</span>
+      <span class="tag">課程作品</span>
+    </div>
+  </div>
+
+  <footer>
+    本站為教學示範用途，內容與價格為虛構範例，不構成專業建議。<br>
+    AI 資訊素養與應用（通識3）｜期末成品範例
+  </footer>
+
+</div>
+</body>
+</html>
