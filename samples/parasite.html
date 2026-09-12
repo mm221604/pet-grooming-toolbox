@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>常見蟲害辨識｜寵物美容工具箱範本</title>
+<style>
+  :root{
+    --bg:#fdf8f4; --card:#ffffff; --line:#ecdfd4; --ink:#33291f; --muted:#8a7b6d;
+    --accent:#d9793f; --accent-soft:#fbeade;
+    --ok:#4a7c59; --ok-soft:#eaf3ed; --warn:#b3541e; --warn-soft:#fdf0e6;
+    --danger:#c0392b; --danger-soft:#fdecea;
+    --shadow:0 1px 2px rgba(90,60,40,.05), 0 8px 24px rgba(90,60,40,.07);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#1c1815; --card:#26211d; --line:#3a322b; --ink:#f0e8e0; --muted:#a29486;
+      --accent:#e08a52; --accent-soft:#3a2a1e;
+      --ok:#7fb08e; --ok-soft:#233029; --warn:#e0925f; --warn-soft:#3a2b20;
+      --danger:#f08578; --danger-soft:#3a221f;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.3);
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;padding:0 0 60px;background:var(--bg);color:var(--ink);line-height:1.7;
+       font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px}
+
+  header{background:linear-gradient(140deg,var(--accent) 0%,#c4642f 100%);color:#fff;
+         padding:34px 18px 30px;margin-bottom:26px}
+  header .in{max-width:660px;margin:0 auto}
+  header .back{display:inline-block;color:#fff;opacity:.9;text-decoration:none;font-size:.88rem;
+               margin-bottom:12px}
+  header .back:hover{opacity:1;text-decoration:underline}
+  header h1{margin:0 0 6px;font-size:1.5rem;letter-spacing:1px;font-weight:800}
+  header p{margin:0;opacity:.93;font-size:.92rem}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;
+        padding:22px;box-shadow:var(--shadow);margin-bottom:18px}
+
+  .f{margin-bottom:16px}
+  .f:last-child{margin-bottom:0}
+  .f label{display:block;font-weight:700;margin-bottom:7px;font-size:.96rem}
+  .f .note{color:var(--muted);font-size:.84rem;margin-top:5px;line-height:1.5}
+  input[type=number],input[type=text],input[type=date],select,textarea{
+    width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:11px;
+    background:var(--bg);color:var(--ink);font:inherit;font-size:1rem}
+  textarea{resize:vertical;min-height:110px;line-height:1.7}
+  select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),
+         linear-gradient(135deg,var(--muted) 50%,transparent 50%);
+         background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;
+         background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:38px}
+
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chips button{padding:9px 15px;border:2px solid var(--line);border-radius:11px;background:var(--bg);
+                color:var(--ink);font:inherit;font-size:.94rem;cursor:pointer}
+  .chips button.on{background:var(--accent-soft);border-color:var(--accent);font-weight:700;color:var(--accent)}
+
+  .checks{display:flex;flex-direction:column;gap:8px}
+  .checks button{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;
+                 padding:11px 13px;border:2px solid var(--line);border-radius:11px;background:var(--bg);
+                 color:var(--ink);font:inherit;font-size:.94rem;cursor:pointer;line-height:1.5}
+  .checks button .bx{flex:0 0 20px;height:20px;border:2px solid var(--line);border-radius:5px;
+                     display:flex;align-items:center;justify-content:center;font-size:.72rem;
+                     color:transparent;margin-top:1px}
+  .checks button.on{background:var(--accent-soft);border-color:var(--accent)}
+  .checks button.on .bx{background:var(--accent);border-color:var(--accent);color:#fff}
+
+  .go{width:100%;padding:16px;border:0;border-radius:13px;background:var(--accent);color:#fff;
+      font:inherit;font-size:1.08rem;font-weight:800;letter-spacing:1px;cursor:pointer;margin-top:4px}
+  .go:hover{filter:brightness(1.06)}
+
+  .out{display:none}
+  .out.on{display:block;animation:in .2s ease}
+  @keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .big{font-size:2.6rem;font-weight:800;color:var(--accent);line-height:1.2;margin:4px 0}
+  .lead{text-align:center;padding:8px 0 4px}
+  .lead .cap{color:var(--muted);font-size:.88rem;letter-spacing:2px}
+
+  .rows{margin-top:10px}
+  .row{display:flex;gap:12px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:.96rem}
+  .row:last-child{border-bottom:0}
+  .row .k{flex:0 0 34%;color:var(--muted)}
+  .row .v{flex:1;font-weight:700}
+
+  .tip{border-left:5px solid var(--accent);background:var(--accent-soft);border-radius:0 12px 12px 0;
+       padding:12px 15px;margin-top:14px;font-size:.93rem;line-height:1.65}
+  .tip.ok{border-left-color:var(--ok);background:var(--ok-soft)}
+  .tip.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .tip.danger{border-left-color:var(--danger);background:var(--danger-soft)}
+  .tip b{display:block;margin-bottom:3px}
+
+  .copybox{position:relative}
+  .copy{width:100%;padding:13px;border:1px solid var(--accent);border-radius:11px;
+        background:var(--accent-soft);color:var(--accent);font:inherit;font-weight:800;
+        cursor:pointer;margin-top:10px}
+  .copy:hover{background:var(--accent);color:#fff}
+
+  .demo{background:var(--warn-soft);border-left:5px solid var(--warn);border-radius:0 12px 12px 0;
+        padding:11px 15px;margin-bottom:18px;font-size:.88rem;line-height:1.6}
+  .demo b{color:var(--warn)}
+
+  footer{text-align:center;color:var(--muted);font-size:.8rem;margin-top:30px;line-height:1.8}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="in">
+    <a class="back" href="index.html">← 回到 24 個範本</a>
+    <h1>常見蟲害辨識</h1>
+    <p>選看到的狀況 → 是跳蚤、壁蝨還是疥癬，怎麼處理</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="demo">
+    <b>這是範本</b>給你看「做出來大概長什麼樣」。裡面的數字和建議都是<strong>示意用的假資料</strong>——
+    你自己做的時候，要換成你查證過的內容。
+  </div>
+
+  <div class="card">
+    <div class="f"><label>你看到或摸到什麼？（可複選）</label><div class="checks" id="s"><button type="button" data-v="jump"><span class="bx">✓</span><span>有會跳的小黑蟲</span></button><button type="button" data-v="dirt"><span class="bx">✓</span><span>毛根有黑色小顆粒（沾水會變紅褐色）</span></button><button type="button" data-v="stuck"><span class="bx">✓</span><span>有咬在皮膚上、圓圓鼓鼓的蟲</span></button><button type="button" data-v="itchEar"><span class="bx">✓</span><span>一直抓耳朵、甩頭</span></button><button type="button" data-v="earDirt"><span class="bx">✓</span><span>耳朵裡有咖啡色像咖啡渣的髒東西</span></button><button type="button" data-v="itchAll"><span class="bx">✓</span><span>全身癢得很厲害</span></button><button type="button" data-v="elbow"><span class="bx">✓</span><span>手肘、耳緣、肚子有結痂脫毛</span></button><button type="button" data-v="ring"><span class="bx">✓</span><span>有圓形的脫毛斑塊</span></button><button type="button" data-v="human"><span class="bx">✓</span><span>家人身上也開始癢</span></button></div></div>
+    <button class="go" id="go">看看可能是什麼</button>
+  </div>
+
+  <div class="card out" id="out"></div>
+
+  <footer>
+    寵物美容工具箱　·　24 個題目範本<br>
+    AI 資訊素養與應用（通識3）｜教學示範用途，內容為虛構範例，不構成專業建議
+  </footer>
+
+</div>
+
+<script>
+
+function $(id){ return document.getElementById(id); }
+function v(id){ return $(id).value.trim(); }
+function n(id){ return parseFloat($(id).value); }
+function chip(id){
+  const box=$(id), on=box.querySelector("button.on");
+  box.onclick=function(e){
+    const b=e.target.closest("button"); if(!b) return;
+    [...box.querySelectorAll("button")].forEach(function(x){x.classList.remove("on");});
+    b.classList.add("on");
+  };
+  return function(){ const s=box.querySelector("button.on"); return s?s.dataset.v:""; };
+}
+function checks(id){
+  const box=$(id);
+  box.onclick=function(e){
+    const b=e.target.closest("button"); if(!b) return;
+    b.classList.toggle("on");
+  };
+  return function(){ return [...box.querySelectorAll("button.on")].map(function(b){return b.dataset.v;}); };
+}
+function show(html){ const o=$("out"); o.innerHTML=html; o.classList.add("on"); o.scrollIntoView({behavior:"smooth",block:"nearest"}); }
+function lead(cap,big,sub){ return '<div class="lead"><div class="cap">'+cap+'</div><div class="big">'+big+'</div>'+(sub?'<div>'+sub+'</div>':'')+'</div>'; }
+function rows(a){ return '<div class="rows">'+a.map(function(r){return '<div class="row"><div class="k">'+r[0]+'</div><div class="v">'+r[1]+'</div></div>';}).join("")+'</div>'; }
+function tip(kind,title,body){ return '<div class="tip '+kind+'"><b>'+title+'</b>'+body+'</div>'; }
+function copyBox(text){
+  return '<div class="copybox"><textarea id="gen" style="min-height:170px">'+text.replace(/</g,"&lt;")+'</textarea>'+
+         '<button class="copy" id="cp">📋 複製，貼給飼主／同事</button></div>';
+}
+function bindCopy(){
+  const b=$("cp"); if(!b) return;
+  b.onclick=function(){
+    const t=$("gen"); t.select();
+    const done=function(){ b.textContent="✅ 已複製"; setTimeout(function(){b.textContent="📋 複製，貼給飼主／同事";},1800); };
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t.value).then(done).catch(function(){ document.execCommand("copy"); done(); });
+    } else { document.execCommand("copy"); done(); }
+  };
+}
+function fmtDate(d){ return d.getFullYear()+"/"+(d.getMonth()+1)+"/"+d.getDate(); }
+function addDays(d,k){ const x=new Date(d.getTime()); x.setDate(x.getDate()+k); return x; }
+function daysBetween(a,b){ return Math.round((b-a)/86400000); }
+
+const s=checks("s");
+const RULES=[
+ {k:"跳蚤",hit:["jump","dirt"],sign:"會跳的小黑蟲、毛根黑色顆粒（跳蚤糞便，沾水變紅褐）",
+  act:"用蚤梳梳出來，洗澡時用除蚤洗劑。<b>環境也要一起處理</b>——地毯、睡窩、沙發縫都要清。",
+  cls:"warn"},
+ {k:"壁蝨",hit:["stuck"],sign:"咬在皮膚上、吸血後鼓起來的蟲",
+  act:"<b>不要硬拔</b>，口器留在皮膚裡會發炎。用專用夾子貼著皮膚轉出來，或直接請獸醫處理。",
+  cls:"danger"},
+ {k:"耳疥蟲",hit:["itchEar","earDirt"],sign:"抓耳朵、甩頭、耳道像咖啡渣的分泌物",
+  act:"<b>需要獸醫確診</b>（要顯微鏡看）。不要自己亂點藥水，可能是外耳炎不是疥蟲。",
+  cls:"danger"},
+ {k:"疥癬蟲",hit:["itchAll","elbow","human"],sign:"劇癢、手肘耳緣結痂脫毛，<b>會傳染給人</b>",
+  act:"<b>立刻請飼主就醫</b>，並和其他動物隔離。店內用過的器具和毛巾要消毒。",
+  cls:"danger"},
+ {k:"黴菌（皮癬）",hit:["ring"],sign:"圓形脫毛斑塊",
+  act:"<b>會傳染給人和其他動物</b>。請飼主就醫確診，接觸過的器具要消毒。",
+  cls:"danger"}
+];
+$("go").onclick=function(){
+  const got=s();
+  if(!got.length){ show(tip("ok","沒有勾選","你沒有勾任何項目。洗澡時記得順手翻開毛看看皮膚。")); return; }
+  const found=RULES.map(function(r){
+    const c=r.hit.filter(function(h){return got.indexOf(h)>=0;}).length;
+    return {r:r,c:c};
+  }).filter(function(x){return x.c>0;}).sort(function(a,b){return b.c-a.c;});
+  if(!found.length){ show(tip("warn","對不太起來","你勾的組合沒有對應到常見的幾種。<b>建議請飼主找獸醫看看</b>。")); return; }
+  const top=found[0].r;
+  show(
+    lead("最可能是", top.k, found.length>1?"也不排除："+found.slice(1).map(function(x){return x.r.k;}).join("、"):"")+
+    rows([["典型徵狀", top.sign]])+
+    tip(top.cls,"怎麼處理",top.act)+
+    (found.length>1 ? tip("","其他可能", found.slice(1).map(function(x){return "<b>"+x.r.k+"</b>："+x.r.sign;}).join("<br>")) : "")+
+    tip("danger","⚠️ 這不是診斷",
+      "美容師<b>不做醫療診斷</b>。這個工具只是幫你判斷「要不要請飼主去看醫生」。<br>"+
+      "疥癬和黴菌<b>會傳染給人</b>——懷疑的時候，先做好防護並通知飼主，不要自己處理。")
+  );
+};
+</script>
+</body>
+</html>

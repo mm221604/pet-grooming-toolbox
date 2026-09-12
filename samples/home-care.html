@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>居家保養說明產生器｜寵物美容工具箱範本</title>
+<style>
+  :root{
+    --bg:#fdf8f4; --card:#ffffff; --line:#ecdfd4; --ink:#33291f; --muted:#8a7b6d;
+    --accent:#d9793f; --accent-soft:#fbeade;
+    --ok:#4a7c59; --ok-soft:#eaf3ed; --warn:#b3541e; --warn-soft:#fdf0e6;
+    --danger:#c0392b; --danger-soft:#fdecea;
+    --shadow:0 1px 2px rgba(90,60,40,.05), 0 8px 24px rgba(90,60,40,.07);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#1c1815; --card:#26211d; --line:#3a322b; --ink:#f0e8e0; --muted:#a29486;
+      --accent:#e08a52; --accent-soft:#3a2a1e;
+      --ok:#7fb08e; --ok-soft:#233029; --warn:#e0925f; --warn-soft:#3a2b20;
+      --danger:#f08578; --danger-soft:#3a221f;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.3);
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;padding:0 0 60px;background:var(--bg);color:var(--ink);line-height:1.7;
+       font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif}
+  .wrap{max-width:660px;margin:0 auto;padding:0 18px}
+
+  header{background:linear-gradient(140deg,var(--accent) 0%,#c4642f 100%);color:#fff;
+         padding:34px 18px 30px;margin-bottom:26px}
+  header .in{max-width:660px;margin:0 auto}
+  header .back{display:inline-block;color:#fff;opacity:.9;text-decoration:none;font-size:.88rem;
+               margin-bottom:12px}
+  header .back:hover{opacity:1;text-decoration:underline}
+  header h1{margin:0 0 6px;font-size:1.5rem;letter-spacing:1px;font-weight:800}
+  header p{margin:0;opacity:.93;font-size:.92rem}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;
+        padding:22px;box-shadow:var(--shadow);margin-bottom:18px}
+
+  .f{margin-bottom:16px}
+  .f:last-child{margin-bottom:0}
+  .f label{display:block;font-weight:700;margin-bottom:7px;font-size:.96rem}
+  .f .note{color:var(--muted);font-size:.84rem;margin-top:5px;line-height:1.5}
+  input[type=number],input[type=text],input[type=date],select,textarea{
+    width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:11px;
+    background:var(--bg);color:var(--ink);font:inherit;font-size:1rem}
+  textarea{resize:vertical;min-height:110px;line-height:1.7}
+  select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),
+         linear-gradient(135deg,var(--muted) 50%,transparent 50%);
+         background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;
+         background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:38px}
+
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chips button{padding:9px 15px;border:2px solid var(--line);border-radius:11px;background:var(--bg);
+                color:var(--ink);font:inherit;font-size:.94rem;cursor:pointer}
+  .chips button.on{background:var(--accent-soft);border-color:var(--accent);font-weight:700;color:var(--accent)}
+
+  .checks{display:flex;flex-direction:column;gap:8px}
+  .checks button{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;
+                 padding:11px 13px;border:2px solid var(--line);border-radius:11px;background:var(--bg);
+                 color:var(--ink);font:inherit;font-size:.94rem;cursor:pointer;line-height:1.5}
+  .checks button .bx{flex:0 0 20px;height:20px;border:2px solid var(--line);border-radius:5px;
+                     display:flex;align-items:center;justify-content:center;font-size:.72rem;
+                     color:transparent;margin-top:1px}
+  .checks button.on{background:var(--accent-soft);border-color:var(--accent)}
+  .checks button.on .bx{background:var(--accent);border-color:var(--accent);color:#fff}
+
+  .go{width:100%;padding:16px;border:0;border-radius:13px;background:var(--accent);color:#fff;
+      font:inherit;font-size:1.08rem;font-weight:800;letter-spacing:1px;cursor:pointer;margin-top:4px}
+  .go:hover{filter:brightness(1.06)}
+
+  .out{display:none}
+  .out.on{display:block;animation:in .2s ease}
+  @keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .big{font-size:2.6rem;font-weight:800;color:var(--accent);line-height:1.2;margin:4px 0}
+  .lead{text-align:center;padding:8px 0 4px}
+  .lead .cap{color:var(--muted);font-size:.88rem;letter-spacing:2px}
+
+  .rows{margin-top:10px}
+  .row{display:flex;gap:12px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:.96rem}
+  .row:last-child{border-bottom:0}
+  .row .k{flex:0 0 34%;color:var(--muted)}
+  .row .v{flex:1;font-weight:700}
+
+  .tip{border-left:5px solid var(--accent);background:var(--accent-soft);border-radius:0 12px 12px 0;
+       padding:12px 15px;margin-top:14px;font-size:.93rem;line-height:1.65}
+  .tip.ok{border-left-color:var(--ok);background:var(--ok-soft)}
+  .tip.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+  .tip.danger{border-left-color:var(--danger);background:var(--danger-soft)}
+  .tip b{display:block;margin-bottom:3px}
+
+  .copybox{position:relative}
+  .copy{width:100%;padding:13px;border:1px solid var(--accent);border-radius:11px;
+        background:var(--accent-soft);color:var(--accent);font:inherit;font-weight:800;
+        cursor:pointer;margin-top:10px}
+  .copy:hover{background:var(--accent);color:#fff}
+
+  .demo{background:var(--warn-soft);border-left:5px solid var(--warn);border-radius:0 12px 12px 0;
+        padding:11px 15px;margin-bottom:18px;font-size:.88rem;line-height:1.6}
+  .demo b{color:var(--warn)}
+
+  footer{text-align:center;color:var(--muted);font-size:.8rem;margin-top:30px;line-height:1.8}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="in">
+    <a class="back" href="index.html">← 回到 24 個範本</a>
+    <h1>居家保養說明產生器</h1>
+    <p>選品種和目前狀況 → 產生一份飼主在家該怎麼照顧的說明</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="demo">
+    <b>這是範本</b>給你看「做出來大概長什麼樣」。裡面的數字和建議都是<strong>示意用的假資料</strong>——
+    你自己做的時候，要換成你查證過的內容。
+  </div>
+
+  <div class="card">
+    <div class="f"><label for="pet">毛孩名字</label><input type="text" id="pet" placeholder="例如：小白"></div>
+    <div class="f"><label>毛質</label><div class="chips" id="coat"><button type="button" data-v="short" class="on">短毛</button><button type="button" data-v="double">雙層毛</button><button type="button" data-v="long">長毛</button><button type="button" data-v="curly">捲毛</button></div></div>
+    <div class="f"><label>目前主要要處理的</label><div class="chips" id="issue"><button type="button" data-v="none" class="on">沒特別問題</button><button type="button" data-v="mat">容易打結</button><button type="button" data-v="dry">皮膚偏乾</button><button type="button" data-v="oily">皮膚偏油、有味道</button><button type="button" data-v="tear">淚痕明顯</button></div></div>
+    <div class="f"><label>飼主的熟練度</label><div class="chips" id="level"><button type="button" data-v="new" class="on">第一次養</button><button type="button" data-v="some">有經驗</button></div></div>
+    <button class="go" id="go">產生保養說明</button>
+  </div>
+
+  <div class="card out" id="out"></div>
+
+  <footer>
+    寵物美容工具箱　·　24 個題目範本<br>
+    AI 資訊素養與應用（通識3）｜教學示範用途，內容為虛構範例，不構成專業建議
+  </footer>
+
+</div>
+
+<script>
+
+function $(id){ return document.getElementById(id); }
+function v(id){ return $(id).value.trim(); }
+function n(id){ return parseFloat($(id).value); }
+function chip(id){
+  const box=$(id), on=box.querySelector("button.on");
+  box.onclick=function(e){
+    const b=e.target.closest("button"); if(!b) return;
+    [...box.querySelectorAll("button")].forEach(function(x){x.classList.remove("on");});
+    b.classList.add("on");
+  };
+  return function(){ const s=box.querySelector("button.on"); return s?s.dataset.v:""; };
+}
+function checks(id){
+  const box=$(id);
+  box.onclick=function(e){
+    const b=e.target.closest("button"); if(!b) return;
+    b.classList.toggle("on");
+  };
+  return function(){ return [...box.querySelectorAll("button.on")].map(function(b){return b.dataset.v;}); };
+}
+function show(html){ const o=$("out"); o.innerHTML=html; o.classList.add("on"); o.scrollIntoView({behavior:"smooth",block:"nearest"}); }
+function lead(cap,big,sub){ return '<div class="lead"><div class="cap">'+cap+'</div><div class="big">'+big+'</div>'+(sub?'<div>'+sub+'</div>':'')+'</div>'; }
+function rows(a){ return '<div class="rows">'+a.map(function(r){return '<div class="row"><div class="k">'+r[0]+'</div><div class="v">'+r[1]+'</div></div>';}).join("")+'</div>'; }
+function tip(kind,title,body){ return '<div class="tip '+kind+'"><b>'+title+'</b>'+body+'</div>'; }
+function copyBox(text){
+  return '<div class="copybox"><textarea id="gen" style="min-height:170px">'+text.replace(/</g,"&lt;")+'</textarea>'+
+         '<button class="copy" id="cp">📋 複製，貼給飼主／同事</button></div>';
+}
+function bindCopy(){
+  const b=$("cp"); if(!b) return;
+  b.onclick=function(){
+    const t=$("gen"); t.select();
+    const done=function(){ b.textContent="✅ 已複製"; setTimeout(function(){b.textContent="📋 複製，貼給飼主／同事";},1800); };
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t.value).then(done).catch(function(){ document.execCommand("copy"); done(); });
+    } else { document.execCommand("copy"); done(); }
+  };
+}
+function fmtDate(d){ return d.getFullYear()+"/"+(d.getMonth()+1)+"/"+d.getDate(); }
+function addDays(d,k){ const x=new Date(d.getTime()); x.setDate(x.getDate()+k); return x; }
+function daysBetween(a,b){ return Math.round((b-a)/86400000); }
+
+const coat=chip("coat"), issue=chip("issue"), level=chip("level");
+const BRUSH={short:"每週梳 1 次就夠，用橡膠梳順著毛流梳。",
+ double:"每週梳 2–3 次，換毛期要每天梳。重點是<b>梳到底層</b>，表面順不代表底下沒有廢毛。",
+ long:"<b>每天梳</b>。從毛尖往上一小段一小段梳，不要從根部硬拉。",
+ curly:"<b>每天梳</b>。捲毛不梳到底層會直接在皮膚上結成氈，用手摸得到才算梳到。"};
+const ISSUE={
+ none:"",
+ mat:"【容易打結】耳後、腋下、大腿內側、尾巴根部是最容易打結的四個地方，每天梳的時候特別注意這幾處。發現小結就立刻處理，拖久了就只能剃掉。",
+ dry:"【皮膚偏乾】洗澡不要太頻繁，會越洗越乾。可以拉長間隔，並使用保濕型洗劑。如果一直脫屑或抓，建議給獸醫看看。",
+ oily:"【皮膚偏油】可以縮短洗澡間隔，但不要每週洗。洗完一定要<b>吹到完全乾</b>，濕氣悶著最容易出問題。",
+ tear:"【淚痕】每天用乾淨的濕紙巾或棉花輕輕擦眼周，擦完擦乾。淚痕是長期累積的，<b>每天做比偶爾大清一次有效</b>。"
+};
+const NEW="【第一次養的話】\n剪指甲、清耳朵這些如果不熟就不要勉強，交給我們就好。在家把「每天梳毛」做好，就已經解決大部分問題了。";
+$("go").onclick=function(){
+  const pet=v("pet")||"毛孩";
+  const cn={short:"短毛",double:"雙層毛",long:"長毛",curly:"捲毛"}[coat()];
+  let t="🐾 "+pet+" 的居家保養說明\n";
+  t+="————————————\n";
+  t+="毛質：" +cn+"\n\n";
+  t+="【梳毛】\n"+BRUSH[coat()].replace(/<\/?b>/g,"")+"\n";
+  if(ISSUE[issue()]) t+="\n"+ISSUE[issue()].replace(/<\/?b>/g,"")+"\n";
+  t+="\n【洗澡】\n在家洗的話，重點是<吹乾>——沒吹乾的毛悶著最容易長濕疹。吹到用手撥開摸得到皮膚是乾的才算好。\n";
+  t+="\n【每天順手做】\n· 摸一摸全身，有沒有腫塊、傷口、打結\n· 看一下耳朵有沒有味道或髒東西\n· 注意有沒有一直抓同一個地方\n";
+  if(level()==="new") t+="\n"+NEW+"\n";
+  t+="\n有任何問題隨時問我們 😊";
+  t=t.replace("<吹乾>","「吹乾」");
+  show(copyBox(t)+
+    tip("","怎麼用","複製後貼給飼主，或印出來當作附贈的小卡。")+
+    tip("ok","為什麼值得做","<b>飼主在家顧得好，你下次的工作就輕鬆。</b>打結、皮膚問題大多是居家照顧沒做到位造成的。"));
+  bindCopy();
+};
+</script>
+</body>
+</html>

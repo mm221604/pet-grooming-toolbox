@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>24 個題目範本｜寵物美容工具箱</title>
+<style>
+  :root{
+    --bg:#fdf8f4; --card:#ffffff; --line:#ecdfd4; --ink:#33291f; --muted:#8a7b6d;
+    --accent:#d9793f; --accent-soft:#fbeade;
+    --blue:#3d6b8c; --purple:#7a5a8c;
+    --warn:#b3541e; --warn-soft:#fdf0e6;
+    --shadow:0 1px 2px rgba(90,60,40,.05), 0 8px 24px rgba(90,60,40,.07);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#1c1815; --card:#26211d; --line:#3a322b; --ink:#f0e8e0; --muted:#a29486;
+      --accent:#e08a52; --accent-soft:#3a2a1e;
+      --blue:#8ab4d4; --purple:#bfa3cf;
+      --warn:#e0925f; --warn-soft:#3a2b20;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.3);
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;padding:0 0 60px;background:var(--bg);color:var(--ink);line-height:1.7;
+       font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif}
+  .wrap{max-width:940px;margin:0 auto;padding:0 18px}
+
+  header{background:linear-gradient(140deg,var(--accent) 0%,#c4642f 100%);color:#fff;
+         padding:46px 18px 40px;text-align:center;margin-bottom:26px}
+  header .in{max-width:940px;margin:0 auto}
+  header .paw{font-size:2.2rem;line-height:1;margin-bottom:8px}
+  header h1{margin:0 0 8px;font-size:1.85rem;letter-spacing:2px;font-weight:800}
+  header p{margin:0;opacity:.93;font-size:.96rem}
+  header .back{display:inline-block;color:#fff;opacity:.9;text-decoration:none;font-size:.86rem;margin-top:14px;
+               border:1px solid rgba(255,255,255,.5);padding:5px 14px;border-radius:20px}
+  header .back:hover{background:rgba(255,255,255,.15)}
+
+  .intro{background:var(--warn-soft);border-left:5px solid var(--warn);border-radius:0 14px 14px 0;
+         padding:16px 20px;margin-bottom:30px;font-size:.94rem;line-height:1.75}
+  .intro b{color:var(--warn)}
+
+  h2{font-size:1.2rem;margin:36px 0 14px;letter-spacing:1px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  h2 .dot{width:12px;height:12px;border-radius:50%;flex:0 0 12px}
+  h2 .dot.calc{background:var(--accent)} h2 .dot.look{background:var(--blue)} h2 .dot.note{background:var(--purple)}
+  h2 .sub{font-weight:400;font-size:.88rem;color:var(--muted);letter-spacing:0}
+  h2 .cnt{margin-left:auto;font-size:.82rem;color:var(--muted);font-weight:400}
+
+  .tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:15px}
+  .tool{display:block;text-decoration:none;color:inherit;background:var(--card);
+        border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:var(--shadow);
+        transition:transform .14s ease, border-color .14s ease}
+  .tool:hover{transform:translateY(-3px);border-color:var(--accent)}
+  .tool .ico{font-size:1.8rem;line-height:1;margin-bottom:8px}
+  .tool h3{margin:0 0 6px;font-size:1.06rem}
+  .tool p{margin:0;color:var(--muted);font-size:.88rem;line-height:1.6}
+  .tool .go{margin-top:11px;color:var(--accent);font-weight:700;font-size:.86rem}
+
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:40px;line-height:1.8}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="in">
+    <div class="paw">🐾</div>
+    <h1>24 個題目範本</h1>
+    <p>一頁網頁做得到的，就是這三種：<strong>算</strong>、<strong>查</strong>、<strong>產生文字</strong></p>
+    <a class="back" href="../">← 看完整的期末成品範例</a>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="intro">
+    <b>這些是「長什麼樣」的參考，不是標準答案。</b><br>
+    裡面的數字、價格、建議<strong>全部是示意用的假資料</strong>——你自己做的時候要換成查證過的內容、你們店真正的價目、你自己的風格。<br>
+    做出來跟這裡不一樣<strong>是好事</strong>，一模一樣反而拿不到「有自己的修改痕跡」那幾分。
+  </div>
+
+  <h2><span class="dot calc"></span>要算的<span class="sub">輸入數字 → 算出答案</span><span class="cnt">8 個</span></h2>
+  <div class="tools">
+      <a class="tool" href="../price.html">
+        <div class="ico">💰</div>
+        <h3>洗剪吹價格試算器</h3>
+        <p>選體型、毛長、要做哪些服務 → 算出總價</p>
+        <div class="go">打開看看 →</div>
+      </a>
+      <a class="tool" href="../age.html">
+        <div class="ico">🎂</div>
+        <h3>寵物年齡換算器</h3>
+        <p>輸入年齡、選狗或貓 → 換算成人類年齡＋生命階段</p>
+        <div class="go">打開看看 →</div>
+      </a>
+      <a class="tool" href="food-amount.html">
+        <div class="ico">🥣</div>
+        <h3>每日飼料量計算機</h3>
+        <p>輸入體重、年齡、活動量 → 算出一天該吃幾公克</p>
+        <div class="go">打開看看 →</div>
+      </a>
+      <a class="tool" href="next-due.html">
+        <div class="ico">📅</div>
+        <h3>保養到期日計算器</h3>
+        <p>輸入上次除蚤／驅蟲／疫苗的日期 → 算出下次哪一天、還剩幾天</p>
+        <div class="go">打開看看 →</div>
+      </a>
+      <a class="tool" href="schedule.html">
+        <div class="ico">⏰</div>
+        <h3>今日排程試算</h3>
+        <p>輸入今天有幾隻、分別什麼體型 → 算出大概要做到幾點</p>
+        <div class="go">打開看看 →</div>
+      </a>
+      <a class="tool" href="weight.html">
+        <div class="ico">⚖️</div>
+        <h3>理想體重檢查</h3>
+        <p>輸入品種和目前體重 → 判斷偏瘦／正常／過重</p>
+        <div class="go">打開看看 →</div>
+      </a>
+      <a class="tool" href="bath-freq.html">
+        <div class="ico">🛁</div>
+        <h3>洗澡頻率建議</h3>
+        <p>選品種、毛質、住家環境 → 算出幾天該洗一次</p>
+        <div class="go">打開看看 →</div>
+      </a>
+      <a class="tool" href="vaccine.html">
+        <div class="ico">💉</div>
+        <h3>幼犬疫苗時程表</h3>
+        <p>輸入出生日期 → 列出每一劑疫苗該打的日期</p>
+        <div class="go">打開看看 →</div>
+      </a>
+  </div>
+
+  <h2><span class="dot look"></span>要查的<span class="sub">選一個 → 查出說明</span><span class="cnt">8 個</span></h2>
+  <div class="tools">
+      <a class="tool" href="../food.html">
+        <div class="ico">🚫</div>
+        <h3>狗貓禁食查詢表</h3>
+        <p>選一種食物 → 能不能吃、危險程度、吃到怎麼辦</p>
+        <div class="go">打開看看 →</div>
+      </a>
+      <a class="tool" href="breed-care.html">
+        <div class="ico">🐕</div>
+        <h3>品種護理指南</h3>
+        <p>選品種 → 顯示多久洗一次、怎麼梳、要注意什麼</p>
+        <div class="go">打開看看 →</div>
+      </a>
+      <a class="tool" href="matting.html">
+        <div class="ico">🪢</div>
+        <h3>打結程度判斷</h3>
+        <p>選打結的狀況 → 建議可以梳開，還是只能剃掉</p>
+        <div class="go">打開看看 →</div>
+      </a>
+      <a class="tool" href="skin-check.html">
+        <div class="ico">🔍</div>
+        <h3>皮膚狀況自我檢查</h3>
+        <p>勾選看到的症狀 → 建議要不要請飼主帶去看醫生</p>
+        <div class="go">打開看看 →</div>
+      </a>
+      <a class="tool" href="plan.html">
+        <div class="ico">📋</div>
+        <h3>美容方案推薦</h3>
+        <p>回答三四個問題 → 推薦適合這隻狗的服務方案</p>
+        <div class="go">打開看看 →</div>
+      </a>
+      <a class="tool" href="tools.html">
+        <div class="ico">✂️</div>
+        <h3>美容工具對照表</h3>
+        <p>選毛質和想要的效果 → 該用哪一種剪刀或梳子</p>
+        <div class="go">打開看看 →</div>
+      </a>
+      <a class="tool" href="parasite.html">
+        <div class="ico">🐛</div>
+        <h3>常見蟲害辨識</h3>
+        <p>選看到的狀況 → 是跳蚤、壁蝨還是疥癬，怎麼處理</p>
+        <div class="go">打開看看 →</div>
+      </a>
+      <a class="tool" href="mood.html">
+        <div class="ico">🐾</div>
+        <h3>狗狗情緒訊號對照</h3>
+        <p>選尾巴、耳朵、姿勢 → 牠現在可能在想什麼</p>
+        <div class="go">打開看看 →</div>
+      </a>
+  </div>
+
+  <h2><span class="dot note"></span>要說明的<span class="sub">填一填 → 產生一段可以直接複製的文字</span><span class="cnt">8 個</span></h2>
+  <div class="tools">
+      <a class="tool" href="after-care.html">
+        <div class="ico">📝</div>
+        <h3>剃毛後叮嚀產生器</h3>
+        <p>勾今天做了什麼 → 產生一段傳給飼主的注意事項</p>
+        <div class="go">打開看看 →</div>
+      </a>
+      <a class="tool" href="handover.html">
+        <div class="ico">🔄</div>
+        <h3>交班紀錄產生器</h3>
+        <p>填今天做了哪幾隻、狀況如何 → 產生一段整齊的交班紀錄</p>
+        <div class="go">打開看看 →</div>
+      </a>
+      <a class="tool" href="post.html">
+        <div class="ico">📱</div>
+        <h3>社群貼文產生器</h3>
+        <p>填品種、做了什麼、想講的重點 → 產生一則 IG 貼文＋hashtag</p>
+        <div class="go">打開看看 →</div>
+      </a>
+      <a class="tool" href="consent.html">
+        <div class="ico">✅</div>
+        <h3>美容前同意書產生器</h3>
+        <p>勾選要做的項目和風險 → 產生一份給飼主確認的文字</p>
+        <div class="go">打開看看 →</div>
+      </a>
+      <a class="tool" href="report.html">
+        <div class="ico">📄</div>
+        <h3>美容完成報告產生器</h3>
+        <p>填今天的狀況 → 產生一份交給飼主的完成報告</p>
+        <div class="go">打開看看 →</div>
+      </a>
+      <a class="tool" href="complaint.html">
+        <div class="ico">💬</div>
+        <h3>客訴回覆範本產生器</h3>
+        <p>選客訴類型和你的立場 → 產生一段得體的回覆</p>
+        <div class="go">打開看看 →</div>
+      </a>
+      <a class="tool" href="welcome.html">
+        <div class="ico">👋</div>
+        <h3>新客人歡迎訊息產生器</h3>
+        <p>填店名和服務特色 → 產生一段歡迎與說明的訊息</p>
+        <div class="go">打開看看 →</div>
+      </a>
+      <a class="tool" href="home-care.html">
+        <div class="ico">🏠</div>
+        <h3>居家保養說明產生器</h3>
+        <p>選品種和目前狀況 → 產生一份飼主在家該怎麼照顧的說明</p>
+        <div class="go">打開看看 →</div>
+      </a>
+  </div>
+
+  <footer>
+    寵物美容工具箱　·　24 個題目範本<br>
+    AI 資訊素養與應用（通識3）｜中華醫事科技大學｜教學示範用途，內容為虛構範例，不構成專業建議
+  </footer>
+
+</div>
+</body>
+</html>
