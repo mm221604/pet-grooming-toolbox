@@ -56,17 +56,90 @@
   .time{margin-top:10px;padding:10px 12px;background:var(--accent-soft);border-radius:10px;
         font-size:.9rem;color:var(--ink)}
   footer{text-align:center;color:var(--muted);font-size:.8rem;margin-top:26px;line-height:1.8}
+
+  /* ===== 改版：頁首、圖表（蓋過上面舊的設定） ===== */
+  :root{--z-ok:#5fa36f;--z-mid:#e6bd4f;--z-warn:#e08a3c;--z-danger:#cf4b3c;--h1:#e08548;--h2:#b8562a;
+        --on-accent:#fff;--shadow:0 1px 2px rgba(90,60,40,.05),0 10px 30px rgba(90,60,40,.08)}
+  body.t-look{--accent:#3d6b8c;--accent-soft:#e6eef4;--h1:#4f82a6;--h2:#284c69}
+  @media (prefers-color-scheme: dark){ :root{--on-accent:#1c1815} body.t-look{--accent:#8ab4d4;--accent-soft:#1f2c36} }
+  body{padding:0 0 60px}
+  .wrap{max-width:620px;padding:0 16px}
+  /* 頁首：分類色漸層＋大圖示 */
+  header.top{position:relative;overflow:hidden;color:#fff;padding:26px 18px 60px;
+         background:radial-gradient(circle at 88% 20%,rgba(255,255,255,.18) 0 60px,transparent 61px),
+                    radial-gradient(circle at 96% 70%,rgba(255,255,255,.10) 0 90px,transparent 91px),
+                    linear-gradient(140deg,var(--h1) 0%,var(--h2) 100%)}
+  header.top .in{max-width:680px;margin:0 auto;position:relative}
+  header.top .back{display:inline-flex;align-items:center;gap:4px;color:#fff;text-decoration:none;font-size:.85rem;
+               background:rgba(255,255,255,.16);padding:4px 12px;border-radius:99px;margin-bottom:16px}
+  header.top .back:hover{background:rgba(255,255,255,.28)}
+  .hd{display:flex;gap:16px;align-items:center}
+  .hd .ico{flex:0 0 72px;height:72px;border-radius:22px;display:grid;place-items:center;font-size:2.4rem;
+           background:rgba(255,255,255,.95);box-shadow:0 8px 20px rgba(0,0,0,.18)}
+  .hd .kind{display:inline-block;font-size:.76rem;font-weight:700;letter-spacing:1px;
+            background:rgba(0,0,0,.18);padding:2px 10px;border-radius:99px;margin-bottom:4px}
+  header.top h1{margin:0 0 2px;font-size:1.6rem;letter-spacing:1px;font-weight:800;line-height:1.3}
+  header.top p{margin:0;opacity:.93;font-size:.92rem}
+  .flow{display:flex;gap:6px;flex-wrap:wrap;margin:-34px 0 18px;position:relative}
+  .flow span{background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:99px;
+             padding:5px 14px;font-size:.84rem;font-weight:700;color:var(--muted)}
+  .flow span b{color:var(--accent)}
+
+
+  header.top{text-align:left;margin:0}
+  .card{border-radius:18px;box-shadow:var(--shadow)}
+  select,input[type="number"],input[type="search"]{border-width:2px;border-radius:12px}
+  button#calc{background:linear-gradient(140deg,var(--h1),var(--h2));border-radius:14px;box-shadow:0 6px 16px rgba(0,0,0,.16);margin-bottom:18px}
+  /* 圖表共用外框 */
+  .viz{margin-top:16px;padding:14px 16px 12px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
+  .viz h4{margin:0 0 8px;font-size:.84rem;color:var(--muted);font-weight:700;letter-spacing:1px}
+
+  /* 圖表：區段量尺 */
+  .gauge{position:relative;padding-top:36px}
+  .gbar,.glab{display:flex}
+  .gbar{height:14px;border-radius:99px;overflow:hidden}
+  .gbar i{height:100%;opacity:.9}
+  .glab span{text-align:center;font-size:.74rem;color:var(--muted);padding-top:4px;white-space:nowrap;overflow:hidden}
+  .gmark{position:absolute;top:0;transform:translateX(-50%);text-align:center;transition:left .6s ease}
+  .gmark b{display:block;background:var(--ink);color:var(--bg);font-size:.8rem;padding:2px 9px;border-radius:8px;white-space:nowrap}
+  .gmark::after{content:"";display:block;width:0;height:0;margin:0 auto;border:6px solid transparent;border-top-color:var(--ink)}
+  .gends{display:flex;justify-content:space-between;font-size:.72rem;color:var(--muted)}
+  .z-ok{background:var(--z-ok)} .z-mid{background:var(--z-mid)} .z-warn{background:var(--z-warn)}
+  .z-danger{background:var(--z-danger)} .z-acc{background:var(--accent)}
+
+  /* 圖表：橫條 */
+  .bars{display:grid;grid-template-columns:auto 1fr auto;gap:8px 10px;align-items:center}
+  .bars .bl{font-size:.86rem;white-space:nowrap}
+  .bars .bt{height:14px;background:var(--line);border-radius:99px;overflow:hidden}
+  .bars .bt i{display:block;height:100%;border-radius:99px;animation:grow .7s ease}
+  .bars .bv{font-weight:800;font-size:.88rem;white-space:nowrap}
+  @keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  .bars .bt i{transform-origin:left}
+
+  /* 圖表：堆疊條 */
+  .stack{display:flex;height:32px;border-radius:10px;overflow:hidden;gap:2px}
+  .stack i{display:grid;place-items:center;color:#fff;font-style:normal;font-size:.78rem;font-weight:700;min-width:0;overflow:hidden;white-space:nowrap}
+  .legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;font-size:.82rem;color:var(--muted)}
+  .legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;background:var(--c)}
+
+
+  #viz{text-align:left}
+  @media (max-width:480px){ .hd .ico{flex-basis:58px;height:58px;font-size:2rem;border-radius:18px} header.top h1{font-size:1.35rem} }
 </style>
 </head>
-<body>
+<body class="t-calc">
+<header class="top">
+  <div class="in">
+    <a class="back" href="index.html">← 回工具箱首頁</a>
+    <div class="hd">
+      <div class="ico" aria-hidden="true">🐩</div>
+      <div><span class="kind">算　輸入數字 → 算出答案</span><h1>洗澡美容價格試算器</h1><p>選一選，馬上算出價格與預估時間</p></div>
+    </div>
+  </div>
+</header>
+
 <div class="wrap">
-
-  <a class="back" href="index.html">← 回工具箱首頁</a>
-
-  <header>
-    <h1>🐩 洗澡美容價格試算器</h1>
-    <div class="sub">選一選，馬上算出價格與預估時間</div>
-  </header>
+  <div class="flow"><span><b>①</b> 選條件</span><span><b>②</b> 按下去</span><span><b>③</b> 看價格</span></div>
 
   <div class="card">
 
@@ -123,6 +196,7 @@
 
   <div class="card" id="result">
     <div id="detail"></div>
+    <div id="viz"></div>
     <div class="total">
       <span class="lab">預估總價</span>
       <span class="num" id="total">NT$ 0</span>
@@ -138,6 +212,68 @@
 </div>
 
 <script>
+
+/* ===== 圖表小工具（每頁都一樣，可以直接複製到自己的網頁用） ===== */
+function r1(x){ return Math.round(x*10)/10; }
+function vizBox(title,inner){ return '<div class="viz">'+(title?'<h4>'+title+'</h4>':'')+inner+'</div>'; }
+/* 區段量尺：zones 是 [[到哪個值,"標籤","ok|mid|warn|danger"], ...]，val 是指針位置 */
+function gauge(title,val,min,max,zones,unit,txt){
+  unit=unit||"";
+  const pct=function(x){ return Math.max(0,Math.min(100,(x-min)/(max-min)*100)); };
+  let prev=min, bar="", lab="";
+  zones.forEach(function(z){
+    const w=pct(z[0])-pct(prev); prev=z[0];
+    bar+='<i class="z-'+z[2]+'" style="width:'+w+'%"></i>';
+    lab+='<span style="width:'+w+'%">'+z[1]+'</span>';
+  });
+  const at=Math.max(4,Math.min(96,pct(val)));
+  return vizBox(title,'<div class="gauge"><div class="gmark" style="left:'+at+'%"><b>'+(txt||r1(val)+unit)+'</b></div>'+
+    '<div class="gbar">'+bar+'</div><div class="glab">'+lab+'</div>'+
+    '<div class="gends"><span>'+r1(min)+unit+'</span><span>'+r1(max)+unit+'</span></div></div>');
+}
+/* 橫條圖：items 是 [["名稱",數值,"ok|mid|warn|danger|acc"], ...] */
+function bars(title,items,unit){
+  const max=Math.max.apply(null,items.map(function(x){return x[1];}))||1;
+  return vizBox(title,'<div class="bars">'+items.map(function(x){
+    return '<span class="bl">'+x[0]+'</span><div class="bt"><i class="z-'+(x[2]||"acc")+'" style="width:'+(x[1]/max*100)+'%"></i></div><span class="bv">'+x[1]+(unit||"")+'</span>';
+  }).join("")+'</div>');
+}
+/* 堆疊條：items 是 [["名稱",數值,"顏色"], ...]，看各部分佔多少 */
+function stack(title,items,unit){
+  const list=items.filter(function(x){return x[1]>0;});
+  return vizBox(title,'<div class="stack">'+list.map(function(x){
+    return '<i style="flex:'+x[1]+';background:'+x[2]+'" title="'+x[0]+'">'+x[1]+'</i>';
+  }).join("")+'</div><div class="legend">'+list.map(function(x){
+    return '<span style="--c:'+x[2]+'">'+x[0]+' '+x[1]+(unit||"")+'</span>';
+  }).join("")+'</div>');
+}
+/* 圓環：p 是 0～1 的比例 */
+function ring(title,p,big,small,color){
+  p=Math.max(0,Math.min(1,p)); const c=2*Math.PI*52;
+  return vizBox(title,'<div class="ring"><svg viewBox="0 0 120 120"><circle class="rt" cx="60" cy="60" r="52"/>'+
+    '<circle cx="60" cy="60" r="52" style="stroke:'+color+';stroke-dasharray:'+(c*p)+' '+c+'"/></svg>'+
+    '<div><b>'+big+'</b><span>'+small+'</span></div></div>');
+}
+/* 時間軸：items 是 [["標題","日期","說明","done|now|soon|todo|late"], ...] */
+function timeline(title,items){
+  return vizBox(title,'<ol class="tl">'+items.map(function(x){
+    return '<li class="'+(x[3]||"todo")+'"><div class="td">'+x[1]+'</div><div class="tt">'+x[0]+'</div>'+(x[2]?'<div class="tn">'+x[2]+'</div>':'')+'</li>';
+  }).join("")+'</ol>');
+}
+/* 日曆格：從今天開始 weeks 週，每 every 天標一個 icon */
+function cal(title,every,weeks,icon){
+  let h="";
+  for(let i=0;i<weeks*7;i++){
+    if(i===0) h+='<span class="today">今天</span>';
+    else h+='<span class="'+(i%every===0?"on":"")+'">'+(i%every===0?icon:"")+'</span>';
+  }
+  return vizBox(title,'<div class="cal">'+h+'</div>');
+}
+/* 步驟卡：list 是文字陣列 */
+function steps(title,list){
+  return vizBox(title,'<div class="steps">'+list.map(function(x){return '<div>'+x+'</div>';}).join("")+'</div>');
+}
+
 /* ─────────────────────────────────────────────
    價目設定：改這裡就能調整整份價格
    ───────────────────────────────────────────── */
@@ -225,6 +361,8 @@ document.getElementById("calc").addEventListener("click", function(){
            item[1].toLocaleString() + '</span></div>';
   }).join("");
 
+  const 色 = ["#b8562a","#e08a3c","#e6bd4f","#7fae8c","#4f82a6","#916ea6","#c98aa0","#8a7b6d"];
+  document.getElementById("viz").innerHTML = stack("價格是怎麼組成的", 明細.filter(function(x){return x[1]>0;}).map(function(x,i){return [x[0], x[1], 色[i%色.length]];}), " 元");
   document.getElementById("total").textContent = "NT$ " + 總價.toLocaleString();
 
   const 小時 = Math.floor(總時間 / 60);
